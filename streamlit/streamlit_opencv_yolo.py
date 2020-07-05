@@ -101,10 +101,21 @@ if __name__ == '__main__':
 
     if choice == 'Get Started':
         # Checkbox
+        place_holder = st.sidebar.empty()   # For layout purpose
         show_txt = st.sidebar.checkbox('Show Text')
         show_plt = st.sidebar.selectbox('Show Plot', ['Plot', 'Map', 'Image'])
 
+        # Update placeholder
+        place_holder.header('Example Options')
+
         # Streamlit basics
+        st.header('Streamlit Basics')
+        st.write('1. Streamlit apps are Python scripts that run from top to bottom')
+        st.write('2. Every time a user opens a browser tab pointing to your app, the script is re-executed')
+        st.write('3. As the script executes, Streamlit draws its output live in a browser')
+        st.write('4. Scripts use the Streamlit cache to avoid recomputing expensive functions, so updates happen very fast')
+        st.write('5. Every time a user interacts with a widget, your script is re-executed and the output value of that widget is set to the new value during that run.')
+
         st.header('Installation')
         st.code('pip install streamlit')
 
@@ -114,6 +125,27 @@ if __name__ == '__main__':
         st.header('How to use')
         st.code('streamlit run *.py')
         st.code('streamlit run URL/*.py')
+
+        st.header('Dataflow')
+        st.write('Streamlit rerun the entire Python script when')
+        st.write('1. Source code is modified')
+        st.write('2. Widget value is modified')
+
+        # Streamlit Cache
+        st.header('Cache')
+        st.write('Wrap the code like follows')
+        with st.echo():
+            @st.cache  # This function will be cached
+            def my_slow_function(arg1):
+                # Do something really slow in here!
+                return arg1
+
+        st.write('Tell Streamlit that whenever the function is called it needs to check a few things:')
+        st.write('-- Input parameters / External variable used in the function')
+        st.write('-- Function Body / Subfunction body used in the cached function')
+        st.write('1. Store these things in a local cache')
+        st.write('2. No change => Skip function')
+        st.write('3. Changed => Rerun the function')
 
         # Streamlit Text
         if show_txt:
